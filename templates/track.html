@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+<title>NBA bets tracker</title>
+</head>
+{% block content %}
+<form action="/monitoring">
+    <h2> Dados da partida selecionada:</h2>
+    <p>{{ data2.game.homeTeam.teamCity }} {{ data2.game.homeTeam.teamName }} x {{ data2.game.awayTeam.teamCity }} {{
+        data2.game.awayTeam.teamName }} - <i> {{ data2.game.gameStatusText }} </i></p>
+    <p>Local: {{ data2.game.arena.arenaName }}, {{ data2.game.arena.arenaCity }}/{{ data2.game.arena.arenaState }}</p>
+    <hr>
+    <h3>Popular</h3>
+    <div class=" form-control">
+        <label for="vencedor">Vencedor da partida</label>
+        <select name="vencedor" id="vencedor">
+            {% for game in data.scoreboard.games %}
+            {% if game.gameId == gameSelectedId %}
+            <option value=""></option>
+            <option value="{{ game.homeTeam.teamName }}">{{ game.homeTeam.teamName }}
+            </option>
+            <option value="{{ game.awayTeam.teamName }}">{{ game.awayTeam.teamName }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="handicap-team">Choose team for Handicap bet</label>
+        <select name="handicap-team" id="handicap-team">
+            {% for game in data.scoreboard.games %}
+            {% if game.gameId == gameSelectedId %}
+            <option value=""></option>
+            <option value="{{ game.homeTeam.teamName }}">{{ game.homeTeam.teamName }}
+            </option>
+            <option value="{{ game.awayTeam.teamName }}">{{ game.awayTeam.teamName }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <label for="handicap">Handicap</label>
+        <input type="number" id="handicap" name="handicap" min="-20.5" max="20.5" step=0.5>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="total-points">Total game points</label>
+        <input type="number" id="total-points" name="total-points" min="-300" max="300">
+    </div>
+    <hr>
+    <!-- POR JOGADOR -->
+    <h3>Por jogador</h3>
+    <div class="form-control">
+        <label for="player-three-points">Cestas de 3</label>
+        <select name="player-three-points" id="player-three-points">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="points-three-points" name="points-three-points" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-rebounds">Rebotes</label>
+        <select name="player-rebounds" id="player-rebounds">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="number-rebounds" name="number-rebounds" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-assists">Assistências</label>
+        <select name="player-assists" id="player-assists">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="qtd-player-assists" name="qtd-player-assists" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-points-assists">Pontos + Assistências</label>
+        <select name="player-points-assists" id="player-points-assists">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="points-assists" name="points-assists" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-points-rebounds">Pontos + Rebotes</label>
+        <select name="player-points-rebounds" id="player-points-rebounds">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="points-rebounds" name="points-rebounds" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-points-assists-rebounds">Pontos + Assistências + Rebotes</label>
+        <select name="player-points-assists-rebounds" id="player-points-assists-rebounds">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="points-assists-rebounds" name="points-assists-rebounds" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-blocks">Bloqueios</label>
+        <select name="player-blocks" id="player-blocks">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="number-blocks" name="number-blocks" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="player-assists">Roubadas</label>
+        <select name="player-steals" id="player-steals">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="ball-steals" name="ball-steals" min="1">
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="double-double-player">Jogador duplo-duplo</label>
+        <select name="double-double-player" id="double-double-player">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="triple-double-player">Jogador triplo-duplo</label>
+        <select name="triple-double-player" id="triple-double-player">
+            <option value=""></option>
+            {% for player in data2.game.homeTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.homeTeam.teamTricode }})</option>
+            {% endfor %}
+            {% for player in data2.game.awayTeam.players %}
+            <option value="{{ player.personId }}-{{ player.name }}">{{ player.nameI }} ({{
+                data2.game.awayTeam.teamTricode }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <hr>
+    <!-- POR PARTIDA -->
+    <h3>Por partida</h3>
+    <div class="form-control">
+        <label for="winner-period">Vencedor por período</label>
+        <select name="winner-period" id="winner-period">
+            {% for game in data.scoreboard.games %}
+            {% if game.gameId == gameSelectedId %}
+            <option value=""></option>
+            <option value="{{ game.homeTeam.teamName }}">{{ game.homeTeam.teamName }}
+            </option>
+            <option value="{{ game.awayTeam.teamName }}">{{ game.awayTeam.teamName }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <label for="winner-period-period">Qual período?</label>
+        <select name="winner-period-period" id="winner-period-period">
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="total-points-even-odd">Pontuação total</label>
+        <select name="total-points-even-odd" id="total-points-even-odd">
+            <option value=""></option>
+            <option value="total-even">Par</option>
+            <option value="total-odd">Ímpar</option>
+        </select>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="jogo-prorrogacao">Jogo na prorrogação</label>
+        <select name="jogo-prorrogacao" id="jogo-prorrogacao">
+            <option value=""></option>
+            <option value="prorrogaca-sim">Sim</option>
+            <option value="prorrogaca-nao">Não</option>
+        </select>
+    </div>
+    <!-- fim -->
+    <hr>
+    <!-- POR TIMES -->
+    <h3>Por times</h3>
+    <div class="form-control">
+        <label for="team-individual-points">Pontos por time</label>
+        <select name="team-individual-points" id="team-individual-points">
+            {% for game in data.scoreboard.games %}
+            {% if game.gameId == gameSelectedId %}
+            <option value=""></option>
+            <option value="{{ game.homeTeam.teamName }}">{{ game.homeTeam.teamName }}
+            </option>
+            <option value="{{ game.awayTeam.teamName }}">{{ game.awayTeam.teamName }}
+            </option>
+            {% endif %}
+            {% endfor %}
+            <option value="both-teams-points">Ambos</option>
+        </select>
+        <br>
+        <input type="number" id="number-points" name="number-points" min="1" max=300>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="winner-difference">Diferença de pontos do vencedor</label>
+        <select name="winner-difference" id="winner-difference">
+            {% for game in data.scoreboard.games %}
+            {% if game.gameId == gameSelectedId %}
+            <option value=""></option>
+            <option value="{{ game.homeTeam.teamName }}">{{ game.homeTeam.teamName }}
+            </option>
+            <option value="{{ game.awayTeam.teamName }}">{{ game.awayTeam.teamName }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <input type="number" id="number-points-difference" name="number-points-difference" min="1" max=300>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="team-points-even-odd">Pontuação par/ímpar do time</label>
+        <select name="team-points-even-odd" id="team-points-even-odd">
+            {% for game in data.scoreboard.games %}
+            {% if game.gameId == gameSelectedId %}
+            <option value=""></option>
+            <option value="{{ game.homeTeam.teamName }}">{{ game.homeTeam.teamName }}
+            </option>
+            <option value="{{ game.awayTeam.teamName }}">{{ game.awayTeam.teamName }}
+            </option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <select name="even-odd-team-points" id="even-odd-team-points">
+            <option value=""></option>
+            <option value="par">Par</option>
+            <option value="impar">Ímpar</option>
+        </select>
+    </div>
+    <button class="btn-grad" type="submit" value="submit">Submit</button>
+</form>
+<script>
+    // console.log("{{ gameSelectedId }}")
+</script>
+{% endblock %}

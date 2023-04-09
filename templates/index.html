@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+<title>NBA bets tracker</title>
+</head>
+{% block content %}
+<form>
+    <div>
+        <a href="/game-select">Go to the Bets! 📈</a>
+    </div>
+    <hr>
+    <br>
+    <div class="games">
+        {% for game in data.scoreboard.games %}
+        <p> <b>{{ game.homeTeam.teamName }} 🆚 {{ game.awayTeam.teamName }} </b> - <i> {{ game.gameStatusText }} </i>
+        </p>
+        {% endfor %}
+    </div>
+</form>
+<script>
+</script>
+{% endblock %}

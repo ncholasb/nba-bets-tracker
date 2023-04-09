@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<title>NBA bets tracker</title>
+</head>
+{% block content %}
+<form id="game-form" action="/track" method="GET">
+    <hr>
+    <div class="form-control">
+        <label for="game-select"> Escolha a partida: </label>
+        <select class="game-select" name="game-select" id="game-select" onchange="getGameId()">
+            <option value=""></option>
+            {% for game in data.scoreboard.games %}
+            <option value="{{game.gameId}}">{{ game.homeTeam.teamName }} x {{game.awayTeam.teamName }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn-grad" type="submit" value="submit">🔎</button>
+    </div>
+</form>
+
+<script>
+    function getGameId() {
+        var gameIdSelected = document.getElementById("game-select").value;
+        var getGameIdvalue = "{{ gameIdSelected }}"
+        // console.log("{{ getGameId }}");
+
+
+        // Update the bets fields
+        var formElement = document.getElementById("game-form");
+        var formData = new FormData(formElement);
+
+        fetch('/process_form', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("game-results").innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error', error);
+            });
+    }
+
+
+
+</script>
+{% endblock %}

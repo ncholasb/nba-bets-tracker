@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<title>NBA bets tracker</title>
+</head>
+{% block content %}
+
+<h1>Acompanhamento</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Categoria</th>
+            <th>Descrição</th>
+            <th>Aposta</th>
+            <th>Estatística ao vivo</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, value in data.items() %}
+        {% if value %}
+        <tr>
+            <td>{{ key }}</td>
+            <td> - </td>
+            <td>{{ value }}</td>
+            <td>-</td>
+            <td class="done">Concluído</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
